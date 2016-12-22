@@ -1,0 +1,2 @@
+# littleSpider
+a scrapy project
