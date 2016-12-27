@@ -9,23 +9,23 @@ class BiliSpider(scrapy.Spider):
     name = "bili"
     allowed_domains = ["bilibili.com"]
     start_urls = [
-        "http://space.bilibili.com/1/#!/index"
+        "http://space.bilibili.com/12/#!/index"
     ]
 
     def parse(self, response):
         data = {}
-        for key in user_config.keys():
-            data[key] = response.xpath(user_config[key]).extract_first()
-        data = self.deal_user_info(data)
-        pydb.insert_user(data)
         extend_data = {}
-        for key in extend_config.keys():
-            extend_data[key] = response.xpath(extend_config[key]).extract_first()
-
-            #
-
-    def deal_user_info(self, data):
-        for key in data.keys():
-            pass
-        # todo
-        return data
+        if response.status == 200:
+            for key in user_config.keys():
+                data[key] = response.xpath(user_config[key]).extract_first()
+            data = deal_user_info(data)
+            for key in extend_config.keys():
+                extend_data[key] = response.xpath(extend_config[key]).extract_first()
+            extend_data = deal_user_info(extend_data)
+        try:
+            id = pydb.insert_user(data)
+            pydb.insert_extend_user(id, extend_data)
+        except Exception as e:
+            print(e)
+            exit()
+        pydb.close()
