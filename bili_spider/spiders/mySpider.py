@@ -9,8 +9,17 @@ class BiliSpider(scrapy.Spider):
     name = "bili"
     allowed_domains = ["bilibili.com"]
     start_urls = [
-        "http://space.bilibili.com/12/#!/index"
+
     ]
+    url = ("http://space.bilibili.com/", "/#!/index")
+    start = 1
+    step = 20
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        for i in range(self.start, self.start + self.step):
+            self.start_urls.append(self.url[0] + str(i) + self.url[1])
+        # print(self.start_urls)
 
     def parse(self, response):
         data = {}
@@ -28,4 +37,6 @@ class BiliSpider(scrapy.Spider):
         except Exception as e:
             print(e)
             exit()
+
+    def __del__(self):
         pydb.close()

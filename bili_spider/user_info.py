@@ -22,7 +22,7 @@ def deal_user_info(data):
     for key in data.keys():
         try:
             func = "deal_" + str(key)
-            data[key] = eval(func)(data[key])
+            data[key] = eval(func)(data[key] or '')
         except Exception as e:
             print(key, e)
     return data
@@ -46,17 +46,20 @@ def deal_gender(gender):
 
 
 def deal_level(level):
-    if str(level).isdigit():
+    if level.isdigit():
         return int(level)
     else:
         return 0
 
 
 def deal_register_time(register_time):
-    date_structs = str(register_time).replace("注册于 ", "").split('-')
-    date_structs = map(int, date_structs)
-    date_structs = tuple(date_structs) + (0, 0, 0, 0, 0, 0)
-    return time.mktime(date_structs)
+    try:
+        date_structs = str(register_time).replace("注册于 ", "").split('-')
+        date_structs = map(int, date_structs)
+        date_structs = tuple(date_structs) + (0, 0, 0, 0, 0, 0)
+        return time.mktime(date_structs)
+    except Exception as e:
+        return 0
 
 
 def deal_head_img(head_img):
@@ -72,14 +75,14 @@ def deal_birthday(birthday):
 
 
 def deal_follow_num(follow_num):
-    if str(follow_num).isdigit():
+    if follow_num.isdigit():
         return int(follow_num)
     else:
         return 0
 
 
 def deal_fans_num(fans_num):
-    if str(fans_num).isdigit():
+    if fans_num.isdigit():
         return int(fans_num)
     else:
         return 0
