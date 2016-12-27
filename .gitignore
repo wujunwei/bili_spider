@@ -90,4 +90,4 @@ ENV/
 
 #phpstrom
 .idea
-bili_spider/db/dbconfig.py
+bili_spider/config.py

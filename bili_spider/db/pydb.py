@@ -1,7 +1,7 @@
 import pymysql
-from bili_spider.db.dbconfig import dbconfig
+from bili_spider.config import dbconfig
 # 创建连接
-conn = pymysql.connect(host='127.0.0.1', port=3306, user='root', passwd='root', db='oa')
+conn = pymysql.connect(host=dbconfig['host'], port=dbconfig['port'], user=dbconfig['user'], passwd=dbconfig['passwd'], db=dbconfig['db'])
 
 # 创建游标
 cursor = conn.cursor()
