@@ -9,7 +9,7 @@ class BiliSpider(scrapy.Spider):
     name = "bili"
     allowed_domains = ["bilibili.com"]
     start_urls = [
-        "http://www.bilibili.com/"
+        r"http://space.bilibili.com/2994719/#!/index"
     ]
 
     def parse(self, response):
