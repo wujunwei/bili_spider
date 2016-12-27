@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from bili_spider.db import pydb
-from bili_spider.config import user_config, extend_config
+from bili_spider.user_info import *
 
 
 class BiliSpider(scrapy.Spider):
@@ -22,10 +22,10 @@ class BiliSpider(scrapy.Spider):
         for key in extend_config.keys():
             extend_data[key] = response.xpath(extend_config[key]).extract_first()
 
-        #
+            #
 
     def deal_user_info(self, data):
         for key in data.keys():
-            pass  #todo
+            pass
+        # todo
         return data
-
