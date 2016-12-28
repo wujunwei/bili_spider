@@ -22,14 +22,14 @@ def deal_user_info(data):
     for key in data.keys():
         try:
             func = "deal_" + str(key)
-            data[key] = eval(func)(data[key] or '')
+            data[key] = eval(func)(str(data[key]).replace('\'', '#') or '')
         except Exception as e:
             print(key, e)
     return data
 
 
 def deal_name(name):
-    if name:
+    if name and (name != "哔哩哔哩"):
         return name
     else:
         return ''

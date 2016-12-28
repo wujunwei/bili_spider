@@ -4,14 +4,13 @@ from random import Random
 from bili_spider.config import dbconfig
 
 # 创建连接
-conn = pymysql.connect(host=dbconfig['host'], port=dbconfig['port'], user=dbconfig['user'], passwd=dbconfig['passwd'],
-                       db=dbconfig['db'], charset='utf8mb4')
+conn = pymysql.connect(**dbconfig)
 
 # 创建游标
 cursor = conn.cursor()
 
 
-def random_str(random_length=4):
+def random_str(random_length=8):
     str1 = ''
     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
     length = len(chars) - 1
@@ -22,7 +21,7 @@ def random_str(random_length=4):
 
 
 def insert_user(data=None):
-    if (data['name'] is None) or (data['name'] == ''):
+    if (data['name'] == 'None') or (data['name'] == ''):
         data = {'name': random_str()}
     else:
         data['add_time'] = time.time()
@@ -49,6 +48,45 @@ def insert_extend_user(user_id=0, data=None):
     conn.commit()
 
 
+def update_user(user_id=0, data=None):
+    if (data['name'] == 'None') or (data['name'] == ''):
+        data = {'name': random_str()}
+    else:
+        data['add_time'] = time.time()
+    sql = 'update user_info set '
+    for key in data.keys():
+        sql += ' ' + str(key) + ' = \'' + str(data[key]) + '\' ,'
+    sql = sql.rstrip(',') + 'where id = ' + str(user_id)
+    cursor.execute(sql)
+    conn.commit()
+    return cursor.lastrowid
+
+
+def update_extend_user(user_id=0, data=None):
+    if not data:
+        pass
+    else:
+        data['add_time'] = time.time()
+    sql = 'update  extend_info set '
+    for key in data.keys():
+        sql += ' ' + str(key) + ' = \'' + str(data[key]) + '\' ,'
+    sql = sql.rstrip(',') + 'where user_id = ' + str(user_id)
+    cursor.execute(sql)
+    conn.commit()
+
+
+def get_fail_user(last_id=0):
+    sql = 'select id from user_info where id > ' + str(last_id) + " and register_time = 0 "
+    print(sql)
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    conn.commit()
+    return result
+
+
 def close():
     cursor.close()
     conn.close()
+
+
+print(get_fail_user())
