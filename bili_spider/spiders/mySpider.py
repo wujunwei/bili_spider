@@ -12,8 +12,8 @@ class BiliSpider(scrapy.Spider):
 
     ]
     url = ("http://space.bilibili.com/", "/#!/index")
-    start = 2001
-    step = 1000
+    start = 3001
+    step = 100
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

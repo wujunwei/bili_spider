@@ -77,7 +77,6 @@ def update_extend_user(user_id=0, data=None):
 
 def get_fail_user(last_id=0):
     sql = 'select id from user_info where id > ' + str(last_id) + " and register_time = 0 "
-    print(sql)
     cursor.execute(sql)
     result = cursor.fetchall()
     conn.commit()
@@ -89,4 +88,3 @@ def close():
     conn.close()
 
 
-print(get_fail_user())
