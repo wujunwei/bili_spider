@@ -83,8 +83,15 @@ def get_fail_user(last_id=0):
     return result
 
 
+def get_next_id():
+    sql = "select AUTO_INCREMENT from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'user_info'  "
+    cursor.execute(sql)
+    result = cursor.fetchone()
+    conn.commit()
+    return result[0]
+
+
 def close():
     cursor.close()
     conn.close()
-
 

@@ -12,12 +12,12 @@ class BiliSpider(scrapy.Spider):
 
     ]
     url = ("http://space.bilibili.com/", "/#!/index")
-    start = 3101
-    step = 100
+    step = 10
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        for i in range(self.start, self.start + self.step):
+        start = int(pydb.get_next_id())
+        for i in range(start, start + self.step):
             self.start_urls.append(self.url[0] + str(i) + self.url[1])
         # print(self.start_urls)
 

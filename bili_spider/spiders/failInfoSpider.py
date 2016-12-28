@@ -13,7 +13,7 @@ class BiliSpider(scrapy.Spider):
     start_urls = [
 
     ]
-    last_id = 3000
+    last_id = 3100
     url = ("http://space.bilibili.com/", "/#!/index")
 
     def __init__(self, **kwargs):
