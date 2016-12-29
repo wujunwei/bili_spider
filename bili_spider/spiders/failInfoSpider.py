@@ -10,10 +10,8 @@ from bili_spider.user_info import *
 class BiliSpider(scrapy.Spider):
     name = "failed"
     allowed_domains = ["bilibili.com"]
-    start_urls = [
-
-    ]
-    last_id = 4341
+    start_urls = []
+    last_id = 5405
     url = ("http://space.bilibili.com/", "/#!/index")
 
     def __init__(self, **kwargs):
